@@ -19,6 +19,7 @@ int main() {
     wohs(256+12);
     cout << "ones: " << ones(256+12) << endl;
     cout << "zeros: " << zeros(256+12) << endl;
+    cout << "Binary: " << f(3902657940) << endl;
 }
 
 void show(unsigned n) {
@@ -55,10 +56,11 @@ unsigned zeros(unsigned n) {
 }
 
 unsigned f(unsigned n) {
+    n |= 0x00FF0000U;
+    n &= 0xFFFF00FFU;
+    n ^= 0x000000FFU;
     
-    
-    
-    return 0;
+    return n;
 }
 
 string addSpace(string& byte) {
