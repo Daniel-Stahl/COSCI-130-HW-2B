@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <bitset>
+#include <vector>
 
 using namespace std;
 
@@ -15,41 +16,85 @@ unsigned f(unsigned n);
 string addSpace(string& bit);
 
 int main() {
-    show(256+12);
-    wohs(256+12);
-    cout << "ones: " << ones(256+12) << endl;
-    cout << "zeros: " << zeros(256+12) << endl;
+    show(5645);
+    wohs(5645);
+    cout << "ones: " << ones(5645) << endl;
+    cout << "zeros: " << zeros(5645) << endl;
     cout << "Binary: " << f(3902657940) << endl;
 }
 
 void show(unsigned n) {
-    string binary = bitset<32>(n).to_string();
-    cout << addSpace(binary) << endl;
+    vector<unsigned>binary;
+    
+    for (int x = 0; n > 0; x++) {
+        binary.insert(binary.end()-x, n%2);
+        n = n/2;
+    }
+    
+    for (int x = 0; binary.size() != 32 ; x++) {
+        binary.insert(binary.begin(), 0);
+    }
+    
+    for (int x = 0; x < binary.size(); x++) {
+        if (x == 8 || x == 16 || x == 24) {
+            cout << " ";
+        }
+        
+        cout << binary.at(x);
+    }
+    cout << "\n";
 }
 
 void wohs(unsigned n) {
-    string reverseBinary = bitset<32>(n).to_string();
-    reverse(reverseBinary.begin(), reverseBinary.end());
-    cout << addSpace(reverseBinary) << endl;
+    vector<unsigned>binary;
+    
+    for (int x = 0; n > 0; x++) {
+        binary.insert(binary.end(), n%2);
+        n = n/2;
+    }
+    
+    for (int x = 0; binary.size() != 32 ; x++) {
+        binary.insert(binary.end(), 0);
+    }
+    
+    for (int x = 0; x < binary.size(); x++) {
+        if (x == 8 || x == 16 || x == 24) {
+            cout << " ";
+        }
+        
+        cout << binary.at(x);
+    }
+    cout << "\n";
 }
 
 unsigned ones(unsigned n) {
-    string binary = bitset<32>(n).to_string();
+    vector<unsigned>binary;
     unsigned ret = 0;
     
-    for (int x = 0; x < binary.size(); x++) {
-        ret = (binary[x] == '1') ? ret + 1 : ret + 0;
+    for (int x = 0; n > 0; x++) {
+        binary.insert(binary.end(), n%2);
+        n = n/2;
+        ret = (binary[x] == 1) ? ret + 1 : ret + 0;
     }
     
     return ret;
 }
 
 unsigned zeros(unsigned n) {
-    string binary = bitset<32>(n).to_string();
+    vector<unsigned>binary;
     unsigned ret = 0;
     
+    for (int x = 0; n > 0; x++) {
+        binary.insert(binary.end(), n%2);
+        n = n/2;
+    }
+    
+    for (int x = 0; binary.size() != 32 ; x++) {
+        binary.insert(binary.end(), 0);
+    }
+    
     for (int x = 0; x < binary.size(); x++) {
-        ret = (binary[x] == '0') ? ret + 1 : ret + 0;
+        ret = (binary[x] == 0) ? ret + 1 : ret + 0;
     }
     
     return ret;
@@ -61,16 +106,4 @@ unsigned f(unsigned n) {
     n ^= 0x000000FFU;
     
     return n;
-}
-
-string addSpace(string& byte) {
-    int x = 8;
-    int y = byte.size();
-    
-    while (x < y) {
-        byte.insert(x, " ");
-        x = x + 9;
-    }
-
-    return byte;
 }
