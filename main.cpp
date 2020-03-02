@@ -20,7 +20,7 @@ int main() {
     wohs(5645);
     cout << "ones: " << ones(5645) << endl;
     cout << "zeros: " << zeros(5645) << endl;
-    cout << "Binary: " << f(3902657940) << endl;
+    cout << "Function f: " << f(0x789ABCDEU) << endl;
 }
 
 void show(unsigned n) {
